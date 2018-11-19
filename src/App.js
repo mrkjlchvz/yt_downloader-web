@@ -3,6 +3,7 @@ import Header from './components/Header';
 import SearchForm from './components/SearchForm';
 import VideoList from './components/VideoList';
 import YTSearch from 'youtube-api-search';
+import svg from './images/undraw_music.svg';
 
 class App extends Component {
 
@@ -41,11 +42,24 @@ class App extends Component {
   }
 
   render() {
+    let emptyRecords = (
+      <div className='text-center'>
+        <img src={svg} className='w-1/2' />
+        <p className='text-xl font-bold text-grey-dark special-font mt-4'>
+          Find the videos you want to download!
+        </p>
+      </div>
+    )
+
     return (
       <div className='container-md mx-auto py-4'>
         <Header />
         <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
-        <VideoList videos={this.state.videos} loadingVideos={this.state.loading} />
+
+        { this.state.videos.length 
+            ? <VideoList videos={this.state.videos} loadingVideos={this.state.loading} />
+            : emptyRecords
+        }
       </div>
     )
   }
