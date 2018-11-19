@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
+import SearchForm from './components/SearchForm';
 import YTSearch from 'youtube-api-search';
 
 const VIDEOS = [
@@ -75,22 +76,26 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { term: '', videos: VIDEOS }
-    this.onInputChange = this.onInputChange.bind(this)
+    this.state = { term: '', videos: [] }
+    this.setSearchTerm = this.setSearchTerm.bind(this)
     this.searchVideos = this.searchVideos.bind(this)
   }
 
-  onInputChange(e) {
+  setSearchTerm(e) {
     this.setState({ term: e.target.value })
   }
 
   searchVideos(e) {
+    e.preventDefault()
+
     let opts = {
       key: process.env.REACT_APP_YT_API_KEY, 
       term: this.state.term,
     }
 
     this.setState({ videos: VIDEOS })
+
+    console.log('submitted')
 
     // YTSearch(opts, (videos) => {
     //   this.setState({ videos })
@@ -103,7 +108,7 @@ class App extends Component {
       const thumbnail = video.snippet.thumbnails.medium
 
       return (
-        <div> 
+        <div key={video.id.videoId}> 
           <h3> {video.snippet.title} </h3>
           <div>
             <img src={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
@@ -118,8 +123,7 @@ class App extends Component {
 
         <Header />
 
-        <input type='text' placeholder='e.g. cat videos' className='border border-2 border-black p-2' onChange={this.onInputChange} />
-        <button className='bg-blue text-white p-2' onClick={this.searchVideos}>Search</button>
+        <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
 
         <div className='videos'>
           {videoItems}
