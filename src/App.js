@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import SearchForm from './components/SearchForm';
+import VideoList from './components/VideoList';
 import YTSearch from 'youtube-api-search';
 
 const VIDEOS = [
   {
     "kind": "youtube#searchResult",
-    "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/10YFj6WhISt8Iu3xFn4BMOL3DKU\"",
+    "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/PX_a6fYQGk1o9JCS61xMK6AEKSQ\"",
     "id": {
       "kind": "youtube#video",
-      "videoId": "D4iOpuTK-pg"
+      "videoId": "Pk86yykcY34"
     },
     "snippet": {
-      "publishedAt": "2018-11-11T03:38:14.000Z",
+      "publishedAt": "2018-11-18T02:59:19.000Z",
       "channelId": "UCxrVzY9dkWKHeKh4eE1jm5Q",
-      "title": "Luffy Return To Fight Katakuri Again - One Piece 861",
-      "description": "Scene is From One Piece Ep 861 One Piece by Eiichiro Oda and Toei Animation Disclaimer : All Rights Goes To Toei Animation One Piece Episode 861 HD ...",
+      "title": "Luffy Tries To Predict Katakuri Attacks - One Piece 862",
+      "description": "Scene is From One Piece Ep 862 One Piece by Eiichiro Oda and Toei Animation Disclaimer : All Rights Goes To Toei Animation One Piece Episode 862 HD ...",
       "thumbnails": {
         "default": {
-          "url": "https://i.ytimg.com/vi/D4iOpuTK-pg/default.jpg",
+          "url": "https://i.ytimg.com/vi/Pk86yykcY34/default.jpg",
           "width": 120,
           "height": 90
         },
         "medium": {
-          "url": "https://i.ytimg.com/vi/D4iOpuTK-pg/mqdefault.jpg",
+          "url": "https://i.ytimg.com/vi/Pk86yykcY34/mqdefault.jpg",
           "width": 320,
           "height": 180
         },
         "high": {
-          "url": "https://i.ytimg.com/vi/D4iOpuTK-pg/hqdefault.jpg",
+          "url": "https://i.ytimg.com/vi/Pk86yykcY34/hqdefault.jpg",
           "width": 480,
           "height": 360
         }
@@ -36,47 +37,14 @@ const VIDEOS = [
       "channelTitle": "MarcoThePhoenix",
       "liveBroadcastContent": "none"
     }
-  },
-  {
-    "kind": "youtube#searchResult",
-    "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/Kom1l261U6u9GNLEd2Vo_Lg-8kw\"",
-    "id": {
-      "kind": "youtube#video",
-      "videoId": "UEEwnPIaDYQ"
-    },
-    "snippet": {
-      "publishedAt": "2018-11-19T00:06:05.000Z",
-      "channelId": "UCrG6YragdKT-NSNCWQr9nJg",
-      "title": "The Strawhats are the WORST PIRATES of Grand Line except Luffy – One Piece 925+",
-      "description": "In One Piece 925, we might see Luffy and Kid talking to each other. We might even see Zoro, Sanji, or Nami. Are the Strawhats the Worst Pirates of One Piece ...",
-      "thumbnails": {
-        "default": {
-          "url": "https://i.ytimg.com/vi/UEEwnPIaDYQ/default.jpg",
-          "width": 120,
-          "height": 90
-        },
-        "medium": {
-          "url": "https://i.ytimg.com/vi/UEEwnPIaDYQ/mqdefault.jpg",
-          "width": 320,
-          "height": 180
-        },
-        "high": {
-          "url": "https://i.ytimg.com/vi/UEEwnPIaDYQ/hqdefault.jpg",
-          "width": 480,
-          "height": 360
-        }
-      },
-      "channelTitle": "Gear 5",
-      "liveBroadcastContent": "none"
-    }
-  },
+  }
 ]
 
 class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { term: '', videos: [] }
+    this.state = { term: '', videos: VIDEOS }
     this.setSearchTerm = this.setSearchTerm.bind(this)
     this.searchVideos = this.searchVideos.bind(this)
   }
@@ -93,43 +61,20 @@ class App extends Component {
       term: this.state.term,
     }
 
-    this.setState({ videos: VIDEOS })
-
-    console.log('submitted')
-
-    // YTSearch(opts, (videos) => {
-    //   this.setState({ videos })
-    //   console.log(videos)
-    // })
+    YTSearch(opts, (videos) => {
+      console.log(videos)
+      this.setState({ videos })
+    })
   }
 
   render() {
-    const videoItems = this.state.videos.map(video => {
-      const thumbnail = video.snippet.thumbnails.medium
-
-      return (
-        <div key={video.id.videoId}> 
-          <h3> {video.snippet.title} </h3>
-          <div>
-            <img src={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
-          </div>
-          <a href="#" className='no-underline bg-red-dark text-white p-2'> Download </a>
-        </div>
-      )
-    })
-
     return (
       <div className='container-md mx-auto py-4'>
-
         <Header />
-
         <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
-
-        <div className='videos'>
-          {videoItems}
-        </div>
+        <VideoList videos={this.state.videos} />
       </div>
-    );
+    )
   }
 }
 
