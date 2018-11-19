@@ -2,10 +2,17 @@ import React from 'react'
 
 const Header = (props) => {
   return (
-    <div className='text-center border-b-4 border-black py-2 mb-8'>
-      <span className='text-5xl special-font text-red-dark'> YT Downloader </span>
-      <span> by </span>
-      <a href='https://twitter.com/markisundefined' className='text-black font-bold no-underline'>@markisundefined</a> 
+    <div className='text-center py-2 mb-4'>
+      <div className='border-b-4 border-black'>
+        <span className='text-5xl special-font text-red-dark'> YT Downloader </span>
+        <span> by </span>
+        <a href='https://twitter.com/markisundefined' className='text-black font-bold no-underline'>@markisundefined</a> 
+      </div>
+
+      <p className='text-center mt-4'> 
+        <span className='font-bold'> Note: </span> 
+        Video downloading is only supported on Android devices. 
+      </p>
     </div>
   )
 }

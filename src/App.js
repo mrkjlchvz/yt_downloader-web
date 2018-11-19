@@ -28,6 +28,7 @@ class App extends Component {
     let opts = {
       key: process.env.REACT_APP_YT_API_KEY, 
       term: searchTerm,
+      maxResults: 10,
     }
 
     this.setState({ loading: true })
@@ -54,6 +55,7 @@ class App extends Component {
     return (
       <div className='container-md mx-auto py-4'>
         <Header />
+
         <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
 
         { this.state.videos.length 
