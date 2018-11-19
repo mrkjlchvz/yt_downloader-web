@@ -8,7 +8,7 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { term: '', videos: [] }
+    this.state = { term: '', loading: false, videos: [] }
     this.setSearchTerm = this.setSearchTerm.bind(this)
     this.searchVideos = this.searchVideos.bind(this)
   }
@@ -29,12 +29,14 @@ class App extends Component {
       term: searchTerm,
     }
 
+    this.setState({ loading: true })
+
     YTSearch(opts, (result) => {
       console.log(result)
       let videos = result.filter(obj => 
         obj.id.kind === 'youtube#video'
       )
-      this.setState({ videos })
+      this.setState({ videos, loading: false, })
     })
   }
 
@@ -43,7 +45,7 @@ class App extends Component {
       <div className='container-md mx-auto py-4'>
         <Header />
         <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
-        <VideoList videos={this.state.videos} />
+        <VideoList videos={this.state.videos} loadingVideos={this.state.loading} />
       </div>
     )
   }

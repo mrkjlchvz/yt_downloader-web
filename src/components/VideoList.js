@@ -1,6 +1,7 @@
 import React from 'react'
+import LoadingContainer from './LoadingContainer'
 
-const VideoList = ({ videos }) => {
+const VideoList = ({ videos, loadingVideos }) => {
   const videoItems = videos.map(video => {
     let thumbnail = video.snippet.thumbnails.high
     let downloadUrl = `https://yout.com/video/${video.id.videoId}/`
@@ -24,7 +25,7 @@ const VideoList = ({ videos }) => {
 
   return (
     <div className='w-3/4 mx-auto'>
-      {videoItems}
+      {loadingVideos ? <LoadingContainer /> : videoItems}
     </div>
   )
 }
