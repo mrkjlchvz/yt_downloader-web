@@ -17,7 +17,9 @@ const VideoList = ({ videos, loadingVideos }) => {
         </div>
 
         <div className='py-4'>
-          <img src={thumbnail.url} alt={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
+          <a href={downloadUrl} target='_blank' rel='noopener noreferrer'>
+            <img src={thumbnail.url} alt={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
+          </a>
         </div>
       </div>
     )
