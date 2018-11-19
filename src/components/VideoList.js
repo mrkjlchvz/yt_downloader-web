@@ -12,11 +12,11 @@ const VideoList = ({ videos }) => {
         </p>
 
         <div className='my-2'>
-          <a href={downloadUrl} target='_blank' className='no-underline bg-red-dark text-white p-2'> Download on Yout </a>
+          <a href={downloadUrl} target='_blank' rel='noopener noreferrer' className='rounded text-lg no-underline bg-red-dark text-white p-2 hover:bg-red-darker'> Download on Yout </a>
         </div>
 
         <div className='py-4'>
-          <img src={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
+          <img src={thumbnail.url} alt={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
         </div>
       </div>
     )

@@ -20,13 +20,20 @@ class App extends Component {
   searchVideos(e) {
     e.preventDefault()
 
+    let searchTerm = this.state.term
+
+    if (searchTerm === '') { return alert('Fill in a search term'); }
+
     let opts = {
       key: process.env.REACT_APP_YT_API_KEY, 
-      term: this.state.term,
+      term: searchTerm,
     }
 
-    YTSearch(opts, (videos) => {
-      console.log(videos)
+    YTSearch(opts, (result) => {
+      console.log(result)
+      let videos = result.filter(obj => 
+        obj.id.kind === 'youtube#video'
+      )
       this.setState({ videos })
     })
   }
