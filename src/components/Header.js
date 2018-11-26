@@ -6,7 +6,7 @@ const Header = (props) => {
       <div className='border-b-4 border-black'>
         <span className='text-5xl special-font text-red-dark'> YT Downloader </span>
         <span> by </span>
-        <a href='https://twitter.com/markisundefined' className='text-black font-bold no-underline'>@markisundefined</a> 
+        <a href='https://twitter.com/MarkFChavez' className='text-black font-bold no-underline'>@MarkFChavez</a> 
       </div>
 
       <p className='text-center mt-4'> 
