@@ -35,10 +35,16 @@ class App extends Component {
 
     YTSearch(opts, (result) => {
       console.log(result)
+
       let videos = result.filter(obj => 
         obj.id.kind === 'youtube#video'
       )
-      this.setState({ videos, loading: false, })
+
+      this.setState({ 
+        videos, 
+        loading: false, 
+        term: '',
+      })
     })
   }
 
@@ -56,7 +62,10 @@ class App extends Component {
       <div className='container-md mx-auto py-4'>
         <Header />
 
-        <SearchForm onSubmit={this.searchVideos} onInputChange={this.setSearchTerm} />
+        <SearchForm 
+          searchTerm={this.state.term}
+          onSubmit={this.searchVideos} 
+          onInputChange={this.setSearchTerm} />
 
         { this.state.videos.length 
             ? <VideoList videos={this.state.videos} loadingVideos={this.state.loading} />
