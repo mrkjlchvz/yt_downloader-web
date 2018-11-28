@@ -50,7 +50,7 @@ class App extends Component {
 
   render() {
     let emptyRecords = (
-      <div className='text-center'>
+      <div>
         <img src={svg} className='w-1/2' />
         <p className='text-xl font-bold text-grey-dark special-font mt-4'>
           Find the videos you want to download!
@@ -59,7 +59,7 @@ class App extends Component {
     )
 
     return (
-      <div className='container-md mx-auto py-4'>
+      <div className='container-md mx-auto p-4'>
         <Header />
 
         <SearchForm 
