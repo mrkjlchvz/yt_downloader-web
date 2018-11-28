@@ -1,25 +1,32 @@
 import React from 'react'
 import LoadingContainer from './LoadingContainer'
 
+// <a 
+//   href={downloadUrl} 
+//   target='_blank' 
+//   rel='noopener noreferrer' 
+//   className='rounded text-lg no-underline bg-red-dark text-white p-2 hover:bg-red-darker'> 
+//   Download on Yout 
+// </a>
+
 const VideoList = ({ videos, loadingVideos }) => {
   const videoItems = videos.map(video => {
-    let thumbnail = video.snippet.thumbnails.high
+    let thumbnail = video.snippet.thumbnails.medium
     let downloadUrl = `https://yout.com/video/${video.id.videoId}/`
 
     return (
       <div key={video.id.videoId} className='mb-4'> 
-        <p className='font-bold text-lg py-2'> 
-          {video.snippet.title} 
-        </p>
+        <div className='flex'>
+          <div className='w-1/3 mr-2'>
+            <a href={downloadUrl} target='_blank' rel='noopener noreferrer'>
+              <img class='border border-grey-darker' src={thumbnail.url} alt={thumbnail.url} />
+            </a>
+          </div>
 
-        <div className='my-2'>
-          <a href={downloadUrl} target='_blank' rel='noopener noreferrer' className='rounded text-lg no-underline bg-red-dark text-white p-2 hover:bg-red-darker'> Download on Yout </a>
-        </div>
-
-        <div className='py-4'>
-          <a href={downloadUrl} target='_blank' rel='noopener noreferrer'>
-            <img src={thumbnail.url} alt={thumbnail.url} width={thumbnail.width} height={thumbnail.height} />
-          </a>
+          <div className='w-2/3'>
+            <p className='mb-2'> {video.snippet.title} </p>
+            <span className='text-grey-darker text-sm'> {video.snippet.channelTitle} </span>
+          </div>
         </div>
       </div>
     )
