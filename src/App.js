@@ -1,9 +1,16 @@
+// Components
 import React, { Component } from 'react';
 import Header from './components/Header';
 import SearchForm from './components/SearchForm';
 import VideoList from './components/VideoList';
-import YTSearch from 'youtube-api-search';
+
+// Assets
 import svg from './images/undraw_music.svg';
+
+// Third-party libs
+import axios from 'axios';
+
+const YT_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 class App extends Component {
 
@@ -25,33 +32,30 @@ class App extends Component {
 
     if (searchTerm === '') { return alert('Fill in a search term'); }
 
-    let opts = {
+    let params = {
+      part: 'snippet',
+      type: 'video',
       key: process.env.REACT_APP_YT_API_KEY, 
-      term: searchTerm,
-      maxResults: 10,
+      q: searchTerm,
+      maxResults: '15',
     }
 
     this.setState({ loading: true })
 
-    YTSearch(opts, (result) => {
-      console.log(result)
-
-      let videos = result.filter(obj => 
-        obj.id.kind === 'youtube#video'
-      )
-
-      this.setState({ 
-        videos, 
-        loading: false, 
-        term: '',
+    axios.get(YT_URL, { params: params })
+      .then(response => {
+        let videos = response.data.items
+        this.setState({ videos, loading: false, term: '' })
       })
-    })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   render() {
     let emptyRecords = (
       <div>
-        <img src={svg} className='w-1/2' />
+        <img alt='empty-record' src={svg} className='w-1/2' />
         <p className='text-xl font-bold text-grey-dark special-font mt-4'>
           Find the videos you want to download!
         </p>
